@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+    <head><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous"></head>
+<body>
+    <h1>Camera With Editor</h1>
+    <video autoplay="true" id="video" width="650" height="490"></video>
+    <canvas id="canvas" width="650" height="490" ></canvas>
+
+    <button class="btn btn-success mb-2" id="capture">CAPTURE</button>
+    <br>
+    <button class="btn btn-success" id="blur">MORE BLUR</button>
+    <button class="btn btn-success" id="lessblur">LESS BLUR</button>
+
+    <button class="btn btn-primary" id="brightness">BRIGHTNESS</button>
+    <button class="btn btn-warning" id="contrast">CONTRAST</button>
+    <button class="btn btn-secondary" id="saturate">SATURATE</button>
+    <button class="btn btn-success" id="sepia">SEPIA</button>
+    
+    <script>
+    async function getWebCam()
+    {
+        try{
+            const videoSrc=await navigator.mediaDevices.getUserMedia({video:true});
+            var video=document.getElementById("video");
+            video.srcObject=videoSrc;
+        }
+        catch(e){
+            console.log(e);
+        }
+    }
+    getWebCam();
+    var lessblur=document.getElementById("lessblur");
+    var capture=document.getElementById("capture");
+    var canvas=document.getElementById("canvas");
+    var context=canvas.getContext('2d');
+    var blur=document.getElementById("blur");
+    var contrast=document.getElementById("contrast");
+    var saturate=document.getElementById("saturate");
+    var sepia=document.getElementById("sepia");
+    
+    
+    capture.addEventListener("click",function(){
+        context.drawImage(video,0,0,650,490);
+    });
+    blur.addEventListener("click",function(){
+        canvas.style.filter="blur(15px)";
+    });
+    lessblur.addEventListener("click",function(){
+        canvas.style.filter="blur(5px)";
+    });
+    contrast.addEventListener("click",function(){
+        canvas.style.filter="contrast(100%)";
+    });
+    saturate.addEventListener("click",function(){
+        canvas.style.filter="saturate(40%)";
+    });
+    sepia.addEventListener("click",function(){
+        canvas.style.filter="sepia(50%)";
+    });</script>
+</body>
+</html>
